@@ -1835,32 +1835,7 @@ class TikhoTests(dict):
         return best_fac
 
 
-def try_solve_two_methods(matrix, result):
-    """
-    Solve sparse matrix equation A.x=b, reverting to least-squared solver when spsolve fails.
-
-    On rare occasions spsolve's approximation of the matrix is not appropriate
-    and fails on good input data.
-
-    Parameters
-    ----------
-    matrix : array-like
-        Matrix A in the system to solve A.x = b
-    result : array-like
-        Vector b in the system to solve A.x = b
-
-    Returns
-    -------
-    array
-        Solution x of the system (1d array)
-    """
-    with warnings.catch_warnings():
-        warnings.filterwarnings(action="error", category=MatrixRankWarning)
-        try:
-            return spsolve(matrix, result)
-        except MatrixRankWarning:
-            log.info("ATOCA matrix solve failed with spsolve. Retrying with least-squares.")
-            return lsqr(matrix, result)[0]
+ 
 
 
 class Tikhonov:
